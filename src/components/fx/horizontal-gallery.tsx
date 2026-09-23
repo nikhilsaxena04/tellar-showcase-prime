@@ -1,4 +1,4 @@
-import { useRef, type ReactNode } from "react";
+import { useEffect, useRef, useState, type ReactNode } from "react";
 import { motion, useScroll, useSpring, useTransform } from "motion/react";
 
 import { useFinePointer } from "./use-fine-pointer";
@@ -24,20 +24,34 @@ export function HorizontalGallery({ slides, header }: { slides: ReactNode[]; hea
 
 function PinnedTrack({ slides, header }: { slides: ReactNode[]; header: ReactNode }) {
   const wrapperRef = useRef<HTMLDivElement>(null);
+  const trackRef = useRef<HTMLDivElement>(null);
+  const [distance, setDistance] = useState(0);
+
+  useEffect(() => {
+    const track = trackRef.current;
+    if (!track) return;
+    const measure = () => setDistance(Math.max(0, track.scrollWidth - window.innerWidth + 40));
+    measure();
+    const observer = new ResizeObserver(measure);
+    observer.observe(track);
+    window.addEventListener("resize", measure);
+    return () => { observer.disconnect(); window.removeEventListener("resize", measure); };
+  }, [slides.length]);
+
   const { scrollYProgress } = useScroll({ target: wrapperRef, offset: ["start start", "end end"] });
   const smooth = useSpring(scrollYProgress, { stiffness: 90, damping: 24, mass: 0.4 });
-  const x = useTransform(smooth, [0, 1], ["0%", "-72%"]);
+  const x = useTransform(smooth, [0, 1], [0, -distance]);
   const progress = useTransform(smooth, [0, 1], ["0%", "100%"]);
 
   return (
-    <div ref={wrapperRef} style={{ height: `${Math.max(2, slides.length) * 100}vh` }} className="relative">
+    <div ref={wrapperRef} style={{ height: `calc(100vh + ${distance}px)` }} className="relative">
       <div className="sticky top-0 flex h-screen flex-col justify-center overflow-hidden">
         <div className="mx-auto w-full max-w-7xl px-5 lg:px-8">{header}</div>
-        <motion.div style={{ x }} className="mt-10 flex w-max items-stretch gap-6 pl-5 lg:pl-8">
+        <motion.div ref={trackRef} style={{ x }} className="mt-10 flex w-max items-stretch gap-6 pl-5 lg:pl-8">
           {slides.map((slide, index) => (
             <div key={index} className="w-[26rem] shrink-0 xl:w-[30rem]">{slide}</div>
           ))}
-          <div className="flex w-[22rem] shrink-0 items-center pr-10 font-mono text-xs uppercase tracking-widest text-muted-foreground">
+          <div className="flex w-[20rem] shrink-0 items-center pr-10 font-mono text-xs uppercase tracking-widest text-muted-foreground">
             end of gallery — keep scrolling
           </div>
         </motion.div>
