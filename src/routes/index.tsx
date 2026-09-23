@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useEffect, useState, type FormEvent } from "react";
+import { useEffect, useState, type FormEvent, type ReactNode } from "react";
 import { motion } from "motion/react";
 import {
   ArrowUpRight, Blocks, Braces, CheckCircle2, Code2, Coffee, Database,
@@ -181,9 +181,9 @@ function Index() {
       <section id="contact" className="border-t border-border bg-muted/30 py-24 sm:py-32"><div className="mx-auto grid max-w-7xl gap-14 px-5 lg:grid-cols-2 lg:px-8">
         <motion.div {...reveal}><SectionHeading number="05" eyebrow="Contact" title="Have a problem worth solving? Let’s talk." /><p className="mt-6 max-w-lg text-lg leading-relaxed text-muted-foreground">I’m always interested in thoughtful products, ambitious teams, and useful open-source work.</p><a href="mailto:hello@example.com" className="mt-8 inline-flex items-center gap-3 font-mono text-sm text-foreground hover:text-primary"><Mail className="size-4" />hello@example.com</a></motion.div>
         <motion.form {...reveal} onSubmit={submitContact} className="glass-panel space-y-5 rounded-lg p-6 sm:p-8" noValidate>
-          <Field label="Name" error={errors.name}><Input name="name" maxLength={100} placeholder="Your name" aria-invalid={Boolean(errors.name)} /></Field>
-          <Field label="Email" error={errors.email}><Input name="email" type="email" maxLength={255} placeholder="you@company.com" aria-invalid={Boolean(errors.email)} /></Field>
-          <Field label="Message" error={errors.message}><Textarea name="message" maxLength={2000} rows={6} placeholder="Tell me about the project, problem, or opportunity..." aria-invalid={Boolean(errors.message)} /></Field>
+          <Field label="Name" error={errors["name"]}><Input name="name" maxLength={100} placeholder="Your name" aria-invalid={Boolean(errors["name"])} /></Field>
+          <Field label="Email" error={errors["email"]}><Input name="email" type="email" maxLength={255} placeholder="you@company.com" aria-invalid={Boolean(errors["email"])} /></Field>
+          <Field label="Message" error={errors["message"]}><Textarea name="message" maxLength={2000} rows={6} placeholder="Tell me about the project, problem, or opportunity..." aria-invalid={Boolean(errors["message"])} /></Field>
           <Button type="submit" variant="glow" size="lg" className="w-full sm:w-auto" disabled={submitting}>{submitting ? "Sending…" : "Send message"}<Send /></Button>
         </motion.form>
       </div></section>
@@ -197,10 +197,10 @@ function SectionHeading({ number, eyebrow, title }: { number: string; eyebrow: s
   return <motion.div {...reveal}><div className="flex items-center gap-3 font-mono text-xs uppercase text-code"><span>{number}</span><span className="h-px w-7 bg-code" />{eyebrow}</div><h2 className="mt-4 max-w-3xl text-3xl font-semibold leading-tight sm:text-5xl">{title}</h2></motion.div>;
 }
 function ProjectCard({ project, index }: { project: Project; index: number }) {
-  const Icon = [Database, Blocks, Terminal][index % 3];
+  const Icon = [Database, Blocks, Terminal][index % 3] ?? Code2;
   return <motion.article {...reveal} transition={{ duration: .55, delay: index*.08 }} className="group glass-panel overflow-hidden rounded-lg transition-all duration-300 hover:-translate-y-1 hover:shadow-xl">
     <div className="relative flex aspect-[16/10] items-center justify-center overflow-hidden border-b border-border bg-surface-strong"><div className="grid-texture absolute inset-0 opacity-70" /><Icon className="relative size-14 text-primary transition-transform duration-500 group-hover:scale-110" />{project.featured && <span className="absolute left-4 top-4 rounded-md border border-border bg-background/70 px-2.5 py-1 font-mono text-[10px] uppercase backdrop-blur">Featured</span>}</div>
     <div className="p-6"><h3 className="text-xl font-semibold">{project.title}</h3><p className="mt-3 min-h-20 text-sm leading-relaxed text-muted-foreground">{project.description}</p><div className="mt-5 flex flex-wrap gap-2">{project.tech_stack.map(t => <span key={t} className="font-mono text-[11px] text-code">#{t.replaceAll(" ", "-").toLowerCase()}</span>)}</div><div className="mt-6 flex gap-2">{project.live_url && <Button asChild variant="secondary" size="sm"><a href={project.live_url} target="_blank" rel="noreferrer">Live <ExternalLink /></a></Button>}{project.github_url && <Button asChild variant="ghost" size="sm"><a href={project.github_url} target="_blank" rel="noreferrer"><Github />Code</a></Button>}</div></div>
   </motion.article>;
 }
-function Field({ label, error, children }: { label: string; error?: string; children: React.ReactNode }) { return <label className="block"><span className="mb-2 block text-sm font-medium">{label}</span>{children}{error && <span className="mt-1.5 block text-xs text-destructive">{error}</span>}</label>; }
+function Field({ label, error, children }: { label: string; error: string | undefined; children: ReactNode }) { return <label className="block"><span className="mb-2 block text-sm font-medium">{label}</span>{children}{error && <span className="mt-1.5 block text-xs text-destructive">{error}</span>}</label>; }
