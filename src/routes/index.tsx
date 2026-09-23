@@ -108,7 +108,7 @@ function Index() {
     toast.success("Message sent — I’ll get back to you soon.", { icon: <CheckCircle2 className="size-4" /> });
   };
 
-  return <div className="min-h-screen overflow-x-hidden bg-background text-foreground">
+  return <div className="min-h-screen overflow-x-clip bg-background text-foreground">
     <header className="fixed inset-x-0 top-0 z-50 border-b border-border/60 bg-background/75 backdrop-blur-xl">
       <nav className="mx-auto flex h-16 max-w-7xl items-center justify-between px-5 lg:px-8" aria-label="Main navigation">
         <a href="#home" className="font-mono text-sm font-bold text-foreground">NS<span className="text-primary">.</span></a>
