@@ -178,6 +178,62 @@
 @keyframes marquee { to { transform: translateX(-50%); } }
 @utility animate-marquee { animation: marquee 28s linear infinite; }
 
+/* Flashlight (x-ray) hidden layer typography */
+@utility xray-type {
+  background-image: linear-gradient(100deg, oklch(0.82 0.19 60), oklch(0.72 0.21 12), oklch(0.78 0.16 190));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* Image-trail tiles */
+@keyframes trail-pop {
+  0% { opacity: 0; transform: translate(-50%, -50%) scale(0.6) rotate(var(--tilt, 0deg)); }
+  18% { opacity: 1; transform: translate(-50%, -50%) scale(1) rotate(var(--tilt, 0deg)); }
+  100% { opacity: 0; transform: translate(-50%, -62%) scale(0.92) rotate(var(--tilt, 0deg)); filter: blur(6px); }
+}
+
+.trail-tile {
+  position: absolute;
+  z-index: 30;
+  display: grid;
+  place-items: center;
+  width: 9.5rem;
+  height: 6.5rem;
+  padding: 0.5rem;
+  border: 1px solid var(--border);
+  border-radius: 0.75rem;
+  background-image: linear-gradient(140deg, color-mix(in oklab, var(--primary) 55%, transparent), color-mix(in oklab, var(--code) 45%, transparent));
+  color: var(--primary-foreground);
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  text-align: center;
+  pointer-events: none;
+  animation: trail-pop 0.9s ease-out forwards;
+}
+
+/* Liquid ripple on hover, driven by --trail-x / --trail-y */
+@utility liquid-surface {
+  position: relative;
+  isolation: isolate;
+  &::after {
+    content: "";
+    position: absolute;
+    inset: -20%;
+    z-index: 1;
+    opacity: 0;
+    transition: opacity 0.35s ease;
+    pointer-events: none;
+    background: radial-gradient(28% 28% at var(--trail-x, 50%) var(--trail-y, 50%), color-mix(in oklab, var(--primary) 45%, transparent), transparent 70%),
+      repeating-radial-gradient(circle at var(--trail-x, 50%) var(--trail-y, 50%), transparent 0 14px, color-mix(in oklab, var(--foreground) 9%, transparent) 14px 18px);
+    mix-blend-mode: screen;
+    filter: blur(1px);
+  }
+  &:hover::after { opacity: 1; }
+}
+
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; scroll-behavior: auto !important; }

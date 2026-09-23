@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useEffect, useState, type FormEvent, type ReactNode } from "react";
+import { useEffect, useState, type FormEvent, type PointerEvent as ReactPointerEvent, type ReactNode } from "react";
 import { motion } from "motion/react";
 import {
   ArrowUpRight, Blocks, Braces, CheckCircle2, Code2, Coffee, Database,
@@ -9,6 +9,11 @@ import {
 import { toast } from "sonner";
 import { z } from "zod";
 
+import { DecryptText } from "@/components/fx/decrypt-text";
+import { HorizontalGallery } from "@/components/fx/horizontal-gallery";
+import { ImageTrail } from "@/components/fx/image-trail";
+import { PhysicsTags } from "@/components/fx/physics-tags";
+import { XRayLayer } from "@/components/fx/xray-layer";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Switch } from "@/components/ui/switch";
@@ -35,6 +40,9 @@ const skillGroups = [
   { title: "Backend", icon: Server, skills: ["Node.js", "PostgreSQL", "REST APIs", "Lovable Cloud", "Redis"] },
   { title: "Tools", icon: ToolCase, skills: ["Git", "Docker", "Vercel", "Figma", "CI/CD"] },
 ];
+const allSkills = skillGroups.flatMap((group) => group.skills);
+const heroLines = ["I build software", "that feels inevitable."];
+const heroXrayLines = ["I break things", "until they hold."];
 const contributions = [
   { repo: "shadcn-ui/ui", title: "Improve keyboard navigation in command menu", status: "Merged", number: "#4821" },
   { repo: "tanstack/router", title: "Clarify route context examples", status: "Merged", number: "#3398" },
@@ -118,13 +126,13 @@ function Index() {
     </header>
 
     <main>
-      <section id="home" className="relative flex min-h-[92vh] items-center pt-20">
+      <section id="home" className="relative flex min-h-[92vh] items-center overflow-hidden pt-20">
         <div className="grid-texture pointer-events-none absolute inset-0 opacity-55" />
         <div className="relative mx-auto w-full max-w-7xl px-5 py-24 lg:px-8">
-          <motion.div initial="initial" animate="animate" variants={{ animate: { transition: { staggerChildren: 0.1 } } }} className="max-w-5xl">
+          <motion.div initial="initial" animate="animate" variants={{ animate: { transition: { staggerChildren: 0.1 } } }} className="relative z-10 max-w-5xl">
             <motion.div variants={{ initial: { opacity: 0, y: 12 }, animate: { opacity: 1, y: 0 } }} className="mb-7 flex items-center gap-3 font-mono text-xs uppercase text-code"><span className="h-px w-8 bg-code" />Available for select projects</motion.div>
             <h1 className="max-w-4xl text-5xl font-semibold leading-[1.03] sm:text-7xl lg:text-8xl">
-              {["I build software", "that feels inevitable."].map((line) => <motion.span key={line} variants={{ initial: { opacity: 0, y: 34 }, animate: { opacity: 1, y: 0 } }} className="block">{line}</motion.span>)}
+              {heroLines.map((line) => <motion.span key={line} variants={{ initial: { opacity: 0, y: 34 }, animate: { opacity: 1, y: 0 } }} className="block">{line}</motion.span>)}
             </h1>
             <motion.p variants={{ initial: { opacity: 0, y: 18 }, animate: { opacity: 1, y: 0 } }} className="mt-7 max-w-2xl text-lg leading-relaxed text-muted-foreground sm:text-xl">Full stack developer crafting thoughtful interfaces, resilient systems, and digital products built to last.</motion.p>
             <motion.div variants={{ initial: { opacity: 0 }, animate: { opacity: 1 } }} className="mt-10 flex flex-wrap items-center gap-3">
@@ -134,26 +142,37 @@ function Index() {
               <Button asChild variant="ghost" size="icon"><a href="https://github.com/yourusername" target="_blank" rel="noreferrer" aria-label="GitHub"><Github /></a></Button>
               <Button asChild variant="ghost" size="icon"><a href="https://linkedin.com/in/yourusername" target="_blank" rel="noreferrer" aria-label="LinkedIn"><Linkedin /></a></Button>
             </motion.div>
+            <p className="mt-12 font-mono text-[10px] uppercase tracking-[0.25em] text-muted-foreground/70">move your cursor — there is something under the surface</p>
           </motion.div>
+
+          <XRayLayer radius={210}>
+            <div className="absolute inset-0 bg-foreground/[0.06]" />
+            <div className="absolute inset-0 px-5 py-24 lg:px-8">
+              <div className="max-w-5xl">
+                <div className="mb-7 flex items-center gap-3 font-mono text-xs uppercase text-primary"><span className="h-px w-8 bg-primary" />Decrypted layer · 0x01</div>
+                <h2 className="xray-type max-w-4xl text-5xl font-semibold leading-[1.03] sm:text-7xl lg:text-8xl">
+                  {heroXrayLines.map((line) => <span key={line} className="block">{line}</span>)}
+                </h2>
+                <p className="xray-type mt-7 max-w-2xl text-lg leading-relaxed sm:text-xl">Ten years of curiosity compressed into shipping habits. Hidden message: hire the person who reads the source.</p>
+              </div>
+            </div>
+          </XRayLayer>
         </div>
       </section>
 
       <section id="skills" className="border-y border-border bg-muted/30 py-24 sm:py-32">
         <div className="mx-auto max-w-7xl px-5 lg:px-8">
-          <SectionHeading number="01" eyebrow="Capabilities" title="Tools I use to turn ideas into products." />
-          <div className="mt-14 grid gap-4 md:grid-cols-3">
-            {skillGroups.map((group, index) => <motion.article key={group.title} {...reveal} transition={{ duration: 0.55, delay: index * 0.08 }} className="glass-panel rounded-lg p-6 transition-transform duration-300 hover:-translate-y-1">
-              <group.icon className="size-6 text-primary" />
-              <h3 className="mt-5 text-lg font-semibold">{group.title}</h3>
-              <div className="mt-6 flex flex-wrap gap-2">{group.skills.map((skill) => <span key={skill} className="rounded-md border border-border bg-background/60 px-3 py-1.5 font-mono text-xs text-muted-foreground">{skill}</span>)}</div>
-            </motion.article>)}
+          <SectionHeading number="01" eyebrow="Capabilities" title="MY TOOLKIT" />
+          <div className="mt-6 flex flex-wrap gap-5 font-mono text-xs uppercase text-muted-foreground">
+            {skillGroups.map((group) => <span key={group.title} className="flex items-center gap-2"><group.icon className="size-4 text-primary" />{group.title}</span>)}
           </div>
-          <div className="mt-10 overflow-hidden border-y border-border py-4" aria-hidden="true"><div className="animate-marquee flex w-max gap-10 font-mono text-xs uppercase text-muted-foreground">{[...skillGroups.flatMap(g => g.skills), ...skillGroups.flatMap(g => g.skills)].map((skill, i) => <span key={`${skill}-${i}`} className="flex items-center gap-3"><Sparkles className="size-3 text-primary" />{skill}</span>)}</div></div>
+          <div className="mt-8"><PhysicsTags tags={allSkills} /></div>
+          <div className="mt-10 overflow-hidden border-y border-border py-4" aria-hidden="true"><div className="animate-marquee flex w-max gap-10 font-mono text-xs uppercase text-muted-foreground">{[...allSkills, ...allSkills].map((skill, i) => <span key={`${skill}-${i}`} className="flex items-center gap-3"><Sparkles className="size-3 text-primary" />{skill}</span>)}</div></div>
         </div>
       </section>
 
       <section id="open-source" className="py-24 sm:py-32"><div className="mx-auto max-w-7xl px-5 lg:px-8">
-        <SectionHeading number="02" eyebrow="Open source" title="Building in public, one contribution at a time." />
+        <SectionHeading number="02" eyebrow="Open source" title="BUILT IN PUBLIC" />
         <motion.div {...reveal} className="mt-12 grid overflow-hidden rounded-lg border border-border bg-foreground text-background sm:grid-cols-3">
           {[ ["48+", "Contributions"], ["12", "Repositories"], ["8", "Merged PRs"] ].map(([value,label]) => <div key={label} className="border-b border-background/15 p-7 last:border-0 sm:border-b-0 sm:border-r"><div className="font-mono text-3xl font-bold text-primary">{value}</div><div className="mt-1 text-sm text-background/65">{label}</div></div>)}
         </motion.div>
@@ -162,22 +181,34 @@ function Index() {
         </motion.a>)}</div>
       </div></section>
 
-      <section id="projects" className="border-y border-border bg-muted/30 py-24 sm:py-32"><div className="mx-auto max-w-7xl px-5 lg:px-8">
-        <SectionHeading number="03" eyebrow="Selected work" title="Projects designed around real problems." />
-        <div className="mt-14 grid gap-5 lg:grid-cols-3">
-          {loadingProjects ? [1,2,3].map(i => <div key={i} className="h-[410px] animate-pulse rounded-lg bg-muted" />) : projects.map((project, index) => <ProjectCard key={project.id} project={project} index={index} />)}
-        </div>
-      </div></section>
+      <section id="projects" className="border-y border-border bg-muted/30 py-24 sm:py-32">
+        <ImageTrail labels={projects.map((p) => p.title)} className="overflow-hidden">
+          {loadingProjects ? <div className="mx-auto grid max-w-7xl gap-5 px-5 md:grid-cols-2 lg:px-8">{[1,2,3].map(i => <div key={i} className="h-[410px] animate-pulse rounded-lg bg-muted" />)}</div> : <HorizontalGallery
+            header={<SectionHeading number="03" eyebrow="Selected work" title="MY PROJECTS" />}
+            slides={projects.map((project, index) => <ProjectCard key={project.id} project={project} index={index} />)}
+          />}
+        </ImageTrail>
+      </section>
 
-      <section id="about" className="py-24 sm:py-32"><div className="mx-auto grid max-w-7xl gap-14 px-5 lg:grid-cols-[.8fr_1.2fr] lg:items-center lg:px-8">
-        <motion.div {...reveal} className="relative mx-auto aspect-[4/5] w-full max-w-sm overflow-hidden rounded-lg border border-border bg-surface-strong">
+
+      <section id="about" className="relative overflow-hidden py-24 sm:py-32"><div className="mx-auto grid max-w-7xl gap-14 px-5 lg:grid-cols-[.8fr_1.2fr] lg:items-center lg:px-8">
+        <motion.div {...reveal} animate={{ y: [0, -10, 0] }} transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }} className="relative mx-auto aspect-[4/5] w-full max-w-sm overflow-hidden rounded-lg border border-border bg-surface-strong">
           <div className="grid-texture absolute inset-0 opacity-70" /><div className="absolute inset-6 flex items-center justify-center rounded-md border border-border bg-background/50 backdrop-blur-sm"><div className="text-center"><Code2 className="mx-auto size-12 text-primary" /><p className="mt-4 font-mono text-xs text-muted-foreground">YOUR PHOTO HERE</p></div></div>
         </motion.div>
-        <motion.div {...reveal}><SectionHeading number="04" eyebrow="About me" title="Curious by nature. Precise by practice." />
+        <motion.div {...reveal}><SectionHeading number="04" eyebrow="About me" title="CURIOUS BY NATURE" />
           <div className="mt-8 space-y-5 text-lg leading-relaxed text-muted-foreground"><p>I’m Nikhil, a software developer focused on building useful, dependable experiences across the stack. I enjoy the space where strong engineering meets thoughtful design.</p><p>When I’m not shipping products, you’ll find me exploring open-source projects, sharpening systems knowledge, or turning coffee into side projects.</p></div>
           <div className="mt-9 flex flex-wrap gap-5 font-mono text-xs text-muted-foreground"><span className="flex items-center gap-2"><Globe2 className="size-4 text-primary" />India · Open to remote</span><span className="flex items-center gap-2"><Coffee className="size-4 text-primary" />Powered by curiosity</span></div>
         </motion.div>
-      </div></section>
+      </div>
+        <XRayLayer radius={170}>
+          <div className="absolute inset-0 bg-foreground/[0.07]" />
+          <div className="absolute inset-0 flex items-center justify-center px-6">
+            <p className="xray-type max-w-3xl text-center font-mono text-2xl font-semibold uppercase leading-snug sm:text-4xl">
+              Hidden layer: I’d rather ship one honest thing than ten clever ones.
+            </p>
+          </div>
+        </XRayLayer>
+      </section>
 
       <section id="contact" className="border-t border-border bg-muted/30 py-24 sm:py-32"><div className="mx-auto grid max-w-7xl gap-14 px-5 lg:grid-cols-2 lg:px-8">
         <motion.div {...reveal}><SectionHeading number="05" eyebrow="Contact" title="Have a problem worth solving? Let’s talk." /><p className="mt-6 max-w-lg text-lg leading-relaxed text-muted-foreground">I’m always interested in thoughtful products, ambitious teams, and useful open-source work.</p><a href="mailto:hello@example.com" className="mt-8 inline-flex items-center gap-3 font-mono text-sm text-foreground hover:text-primary"><Mail className="size-4" />hello@example.com</a></motion.div>
@@ -195,12 +226,20 @@ function Index() {
 }
 
 function SectionHeading({ number, eyebrow, title }: { number: string; eyebrow: string; title: string }) {
-  return <motion.div {...reveal}><div className="flex items-center gap-3 font-mono text-xs uppercase text-code"><span>{number}</span><span className="h-px w-7 bg-code" />{eyebrow}</div><h2 className="mt-4 max-w-3xl text-3xl font-semibold leading-tight sm:text-5xl">{title}</h2></motion.div>;
+  return <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true, margin: "-60px" }} transition={{ duration: 0.4 }}>
+    <div className="flex items-center gap-3 font-mono text-xs uppercase text-code"><span>{number}</span><span className="h-px w-7 bg-code" />{eyebrow}</div>
+    <DecryptText as="h2" text={title} className="mt-4 block max-w-3xl font-mono text-2xl font-semibold uppercase leading-tight tracking-tight sm:text-4xl" />
+  </motion.div>;
 }
 function ProjectCard({ project, index }: { project: Project; index: number }) {
   const Icon = [Database, Blocks, Terminal][index % 3] ?? Code2;
-  return <motion.article {...reveal} transition={{ duration: .55, delay: index*.08 }} className="group glass-panel overflow-hidden rounded-lg transition-all duration-300 hover:-translate-y-1 hover:shadow-xl">
-    <div className="relative flex aspect-[16/10] items-center justify-center overflow-hidden border-b border-border bg-surface-strong"><div className="grid-texture absolute inset-0 opacity-70" /><Icon className="relative size-14 text-primary transition-transform duration-500 group-hover:scale-110" />{project.featured && <span className="absolute left-4 top-4 rounded-md border border-border bg-background/70 px-2.5 py-1 font-mono text-[10px] uppercase backdrop-blur">Featured</span>}</div>
+  const trackRipple = (event: ReactPointerEvent<HTMLDivElement>) => {
+    const rect = event.currentTarget.getBoundingClientRect();
+    event.currentTarget.style.setProperty("--trail-x", `${((event.clientX - rect.left) / rect.width) * 100}%`);
+    event.currentTarget.style.setProperty("--trail-y", `${((event.clientY - rect.top) / rect.height) * 100}%`);
+  };
+  return <motion.article {...reveal} transition={{ duration: .55, delay: index*.08 }} className="group glass-panel h-full overflow-hidden rounded-xl transition-all duration-300 hover:-translate-y-1 hover:shadow-xl">
+    <div onPointerMove={trackRipple} className="liquid-surface relative flex aspect-[16/10] items-center justify-center overflow-hidden border-b border-border bg-surface-strong"><div className="grid-texture absolute inset-0 opacity-70" /><Icon className="relative z-[2] size-14 text-primary transition-transform duration-500 group-hover:scale-110" />{project.featured && <span className="absolute left-4 top-4 z-[2] rounded-md border border-border bg-background/70 px-2.5 py-1 font-mono text-[10px] uppercase backdrop-blur">Featured</span>}</div>
     <div className="p-6"><h3 className="text-xl font-semibold">{project.title}</h3><p className="mt-3 min-h-20 text-sm leading-relaxed text-muted-foreground">{project.description}</p><div className="mt-5 flex flex-wrap gap-2">{project.tech_stack.map(t => <span key={t} className="font-mono text-[11px] text-code">#{t.replaceAll(" ", "-").toLowerCase()}</span>)}</div><div className="mt-6 flex gap-2">{project.live_url && <Button asChild variant="secondary" size="sm"><a href={project.live_url} target="_blank" rel="noreferrer">Live <ExternalLink /></a></Button>}{project.github_url && <Button asChild variant="ghost" size="sm"><a href={project.github_url} target="_blank" rel="noreferrer"><Github />Code</a></Button>}</div></div>
   </motion.article>;
 }
