@@ -146,7 +146,7 @@ function Index() {
           </motion.div>
 
           <XRayLayer radius={210}>
-            <div className="absolute inset-0 bg-foreground/[0.06]" />
+            <div className="absolute inset-0 bg-background" />
             <div className="absolute inset-0 px-5 py-24 lg:px-8">
               <div className="max-w-5xl">
                 <div className="mb-7 flex items-center gap-3 font-mono text-xs uppercase text-primary"><span className="h-px w-8 bg-primary" />Decrypted layer · 0x01</div>
@@ -201,7 +201,7 @@ function Index() {
         </motion.div>
       </div>
         <XRayLayer radius={170}>
-          <div className="absolute inset-0 bg-foreground/[0.07]" />
+          <div className="absolute inset-0 bg-background" />
           <div className="absolute inset-0 flex items-center justify-center px-6">
             <p className="xray-type max-w-3xl text-center font-mono text-2xl font-semibold uppercase leading-snug sm:text-4xl">
               Hidden layer: I’d rather ship one honest thing than ten clever ones.
