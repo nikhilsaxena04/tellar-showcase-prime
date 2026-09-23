@@ -10,11 +10,6 @@ import { useFinePointer } from "./use-fine-pointer";
  */
 export function HorizontalGallery({ slides, header }: { slides: ReactNode[]; header: ReactNode }) {
   const enabled = useFinePointer();
-  const wrapperRef = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({ target: wrapperRef, offset: ["start start", "end end"] });
-  const smooth = useSpring(scrollYProgress, { stiffness: 90, damping: 24, mass: 0.4 });
-  const x = useTransform(smooth, [0, 1], ["0%", "-78%"]);
-  const progress = useTransform(smooth, [0, 1], ["0%", "100%"]);
 
   if (!enabled) {
     return (
@@ -24,12 +19,21 @@ export function HorizontalGallery({ slides, header }: { slides: ReactNode[]; hea
       </div>
     );
   }
+  return <PinnedTrack slides={slides} header={header} />;
+}
+
+function PinnedTrack({ slides, header }: { slides: ReactNode[]; header: ReactNode }) {
+  const wrapperRef = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({ target: wrapperRef, offset: ["start start", "end end"] });
+  const smooth = useSpring(scrollYProgress, { stiffness: 90, damping: 24, mass: 0.4 });
+  const x = useTransform(smooth, [0, 1], ["0%", "-72%"]);
+  const progress = useTransform(smooth, [0, 1], ["0%", "100%"]);
 
   return (
     <div ref={wrapperRef} style={{ height: `${Math.max(2, slides.length) * 100}vh` }} className="relative">
       <div className="sticky top-0 flex h-screen flex-col justify-center overflow-hidden">
         <div className="mx-auto w-full max-w-7xl px-5 lg:px-8">{header}</div>
-        <motion.div style={{ x }} className="mt-12 flex w-max items-stretch gap-6 pl-5 lg:pl-8">
+        <motion.div style={{ x }} className="mt-10 flex w-max items-stretch gap-6 pl-5 lg:pl-8">
           {slides.map((slide, index) => (
             <div key={index} className="w-[26rem] shrink-0 xl:w-[30rem]">{slide}</div>
           ))}
@@ -37,7 +41,7 @@ export function HorizontalGallery({ slides, header }: { slides: ReactNode[]; hea
             end of gallery — keep scrolling
           </div>
         </motion.div>
-        <div className="mx-auto mt-10 h-px w-full max-w-7xl bg-border px-5 lg:px-8">
+        <div className="mx-auto mt-10 h-px w-[calc(100%-2.5rem)] max-w-7xl bg-border">
           <motion.div style={{ width: progress }} className="h-px bg-primary" />
         </div>
       </div>
