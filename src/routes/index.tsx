@@ -182,7 +182,7 @@ function Index() {
       </div></section>
 
       <section id="projects" className="border-y border-border bg-muted/30 py-24 sm:py-32">
-        <ImageTrail labels={projects.map((p) => p.title)} className="overflow-hidden">
+        <ImageTrail labels={projects.map((p) => p.title)}>
           {loadingProjects ? <div className="mx-auto grid max-w-7xl gap-5 px-5 md:grid-cols-2 lg:px-8">{[1,2,3].map(i => <div key={i} className="h-[410px] animate-pulse rounded-lg bg-muted" />)}</div> : <HorizontalGallery
             header={<SectionHeading number="03" eyebrow="Selected work" title="MY PROJECTS" />}
             slides={projects.map((project, index) => <ProjectCard key={project.id} project={project} index={index} />)}
