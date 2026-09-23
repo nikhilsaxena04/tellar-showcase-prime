@@ -83,7 +83,8 @@ function Index() {
 
   const submitContact = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    const form = new FormData(event.currentTarget);
+    const formElement = event.currentTarget;
+    const form = new FormData(formElement);
     const parsed = contactSchema.safeParse({ name: form.get("name"), email: form.get("email"), message: form.get("message") });
     if (!parsed.success) {
       const next: Record<string, string> = {};
@@ -95,7 +96,7 @@ function Index() {
     const { error } = await supabase.from("contact_messages").insert(parsed.data);
     setSubmitting(false);
     if (error) { toast.error("Your message wasn’t sent. Please try again."); return; }
-    event.currentTarget.reset();
+    formElement.reset();
     toast.success("Message sent — I’ll get back to you soon.", { icon: <CheckCircle2 className="size-4" /> });
   };
 
