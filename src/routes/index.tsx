@@ -29,7 +29,7 @@ export const Route = createFileRoute("/")({
 
 type Project = { id: string; title: string; description: string; tech_stack: string[]; image_url: string | null; live_url: string | null; github_url: string | null; featured: boolean };
 
-const navItems = ["Home", "Skills", "Projects", "Open Source", "About", "Contact"];
+const navItems = ["Home", "Skills", "Open Source", "Projects", "About", "Contact"];
 const skillGroups = [
   { title: "Frontend", icon: Braces, skills: ["React", "TypeScript", "Next.js", "Tailwind CSS", "Motion"] },
   { title: "Backend", icon: Server, skills: ["Node.js", "PostgreSQL", "REST APIs", "Lovable Cloud", "Redis"] },
@@ -152,21 +152,21 @@ function Index() {
         </div>
       </section>
 
-      <section id="projects" className="py-24 sm:py-32"><div className="mx-auto max-w-7xl px-5 lg:px-8">
-        <SectionHeading number="02" eyebrow="Selected work" title="Projects designed around real problems." />
-        <div className="mt-14 grid gap-5 lg:grid-cols-3">
-          {loadingProjects ? [1,2,3].map(i => <div key={i} className="h-[410px] animate-pulse rounded-lg bg-muted" />) : projects.map((project, index) => <ProjectCard key={project.id} project={project} index={index} />)}
-        </div>
-      </div></section>
-
-      <section id="open-source" className="border-y border-border bg-muted/30 py-24 sm:py-32"><div className="mx-auto max-w-7xl px-5 lg:px-8">
-        <SectionHeading number="03" eyebrow="Open source" title="Building in public, one contribution at a time." />
+      <section id="open-source" className="py-24 sm:py-32"><div className="mx-auto max-w-7xl px-5 lg:px-8">
+        <SectionHeading number="02" eyebrow="Open source" title="Building in public, one contribution at a time." />
         <motion.div {...reveal} className="mt-12 grid overflow-hidden rounded-lg border border-border bg-foreground text-background sm:grid-cols-3">
           {[ ["48+", "Contributions"], ["12", "Repositories"], ["8", "Merged PRs"] ].map(([value,label]) => <div key={label} className="border-b border-background/15 p-7 last:border-0 sm:border-b-0 sm:border-r"><div className="font-mono text-3xl font-bold text-primary">{value}</div><div className="mt-1 text-sm text-background/65">{label}</div></div>)}
         </motion.div>
         <div className="mt-8 divide-y divide-border border-y border-border">{contributions.map((item, index) => <motion.a {...reveal} transition={{ duration: .45, delay: index*.06 }} key={item.number} href="https://github.com/yourusername" target="_blank" rel="noreferrer" className="group grid gap-3 py-6 sm:grid-cols-[1fr_2fr_auto] sm:items-center">
           <span className="flex items-center gap-2 font-mono text-xs text-code"><GitBranch className="size-4" />{item.repo}</span><span className="font-medium group-hover:text-primary">{item.title} <span className="text-muted-foreground">{item.number}</span></span><span className="flex items-center gap-2 text-xs text-muted-foreground"><span className={`size-2 rounded-full ${item.status === "Merged" ? "bg-code" : "bg-primary"}`} />{item.status}<ArrowUpRight className="size-4" /></span>
         </motion.a>)}</div>
+      </div></section>
+
+      <section id="projects" className="border-y border-border bg-muted/30 py-24 sm:py-32"><div className="mx-auto max-w-7xl px-5 lg:px-8">
+        <SectionHeading number="03" eyebrow="Selected work" title="Projects designed around real problems." />
+        <div className="mt-14 grid gap-5 lg:grid-cols-3">
+          {loadingProjects ? [1,2,3].map(i => <div key={i} className="h-[410px] animate-pulse rounded-lg bg-muted" />) : projects.map((project, index) => <ProjectCard key={project.id} project={project} index={index} />)}
+        </div>
       </div></section>
 
       <section id="about" className="py-24 sm:py-32"><div className="mx-auto grid max-w-7xl gap-14 px-5 lg:grid-cols-[.8fr_1.2fr] lg:items-center lg:px-8">
