@@ -8,6 +8,13 @@
       "when": 1790159684837,
       "tag": "0000_create_portfolio_projects_and_contact_messages",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1790336996919,
+      "tag": "0001_add_project_bullets",
+      "breakpoints": true
     }
   ]
 }
