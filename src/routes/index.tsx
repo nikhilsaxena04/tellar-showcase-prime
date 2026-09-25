@@ -32,7 +32,7 @@ export const Route = createFileRoute("/")({
   component: Index,
 });
 
-type Project = { id: string; title: string; description: string; tech_stack: string[]; image_url: string | null; live_url: string | null; github_url: string | null; featured: boolean };
+type Project = { id: string; title: string; description: string; tech_stack: string[]; bullets: string[] | null; image_url: string | null; live_url: string | null; github_url: string | null; featured: boolean };
 
 const navItems = ["Home", "Skills", "Open Source", "Projects", "About", "Contact"];
 const skillGroups = [
@@ -75,7 +75,7 @@ function Index() {
 
   useEffect(() => {
     let active = true;
-    supabase.from("projects").select("id,title,description,tech_stack,image_url,live_url,github_url,featured").order("display_order").then(({ data, error }) => {
+    supabase.from("projects").select("id,title,description,tech_stack,bullets,image_url,live_url,github_url,featured").order("display_order").then(({ data, error }) => {
       if (!active) return;
       if (error) toast.error("Projects could not be loaded right now.");
       else setProjects(data ?? []);
@@ -241,7 +241,7 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
   };
   return <motion.article {...reveal} transition={{ duration: .55, delay: index*.08 }} className="group glass-panel h-full overflow-hidden rounded-xl transition-all duration-300 hover:-translate-y-1 hover:shadow-xl">
     <div onPointerMove={trackRipple} className="liquid-surface relative flex aspect-[16/10] items-center justify-center overflow-hidden border-b border-border bg-surface-strong"><div className="grid-texture absolute inset-0 opacity-70" /><Icon className="relative z-[2] size-14 text-primary transition-transform duration-500 group-hover:scale-110" />{project.featured && <span className="absolute left-4 top-4 z-[2] rounded-md border border-border bg-background/70 px-2.5 py-1 font-mono text-[10px] uppercase backdrop-blur">Featured</span>}</div>
-    <div className="p-6"><h3 className="text-xl font-semibold">{project.title}</h3><p className="mt-3 min-h-20 text-sm leading-relaxed text-muted-foreground">{project.description}</p><div className="mt-5 flex flex-wrap gap-2">{project.tech_stack.map(t => <span key={t} className="font-mono text-[11px] text-code">#{t.replaceAll(" ", "-").toLowerCase()}</span>)}</div><div className="mt-6 flex gap-2">{project.live_url && <Button asChild variant="secondary" size="sm"><a href={project.live_url} target="_blank" rel="noreferrer">Live <ExternalLink /></a></Button>}{project.github_url && <Button asChild variant="ghost" size="sm"><a href={project.github_url} target="_blank" rel="noreferrer"><Github />Code</a></Button>}</div></div>
+    <div className="p-6"><h3 className="text-xl font-semibold">{project.title}</h3><p className="mt-3 text-sm leading-relaxed text-muted-foreground">{project.description}</p>{project.bullets && project.bullets.length > 0 && <ul className="mt-4 list-disc space-y-1.5 pl-5 text-[13px] leading-snug text-muted-foreground/85 marker:text-primary/70">{project.bullets.map((b) => <li key={b}>{b}</li>)}</ul>}<div className="mt-5 flex flex-wrap gap-2">{project.tech_stack.map(t => <span key={t} className="font-mono text-[11px] text-code">#{t.replaceAll(" ", "-").toLowerCase()}</span>)}</div><div className="mt-6 flex gap-2">{project.live_url && <Button asChild variant="secondary" size="sm"><a href={project.live_url} target="_blank" rel="noreferrer">Live <ExternalLink /></a></Button>}{project.github_url && <Button asChild variant="ghost" size="sm"><a href={project.github_url} target="_blank" rel="noreferrer"><Github />Code</a></Button>}</div></div>
   </motion.article>;
 }
 function Field({ label, error, children }: { label: string; error: string | undefined; children: ReactNode }) { return <label className="block"><span className="mb-2 block text-sm font-medium">{label}</span>{children}{error && <span className="mt-1.5 block text-xs text-destructive">{error}</span>}</label>; }
