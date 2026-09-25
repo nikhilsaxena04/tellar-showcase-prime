@@ -41,13 +41,13 @@ const skillGroups = [
   { title: "Tools", icon: ToolCase, skills: ["Docker", "AWS", "GitHub Actions", "Prometheus", "Grafana"] },
 ];
 const allSkills = skillGroups.flatMap((group) => group.skills);
-const heroLines = ["I engineer robust systems", "that scale."];
-const heroXrayLines = ["I build the backend", "you don't have to worry about."];
+const heroLines = ["I build systems that keep working", "when things go wrong."];
+const heroXrayLines = ["What happens when", "something goes wrong?"];
 const contributions = [
-  { repo: "Graphify", title: "Fix PHP route handlers in graph", status: "Merged", number: "#3461" },
-  { repo: "Graphify", title: "Stabilize closure IDs & refine extractor", status: "Merged", number: "8 commits" },
-  { repo: "Checkmate", title: "Build click-through incident history", status: "Merged", number: "#3975" },
-  { repo: "Checkmate", title: "Fix gRPC health monitor initialization", status: "Merged", number: "#3974" },
+  { repo: "Graphify (120K+ ★, 7M+ DL)", title: "Fix PHP route handlers in graph", status: "Merged", number: "#3461", url: "https://github.com/Graphify-Labs/graphify/pull/3461" },
+  { repo: "Graphify (120K+ ★, 7M+ DL)", title: "Stabilize closure IDs & refine extractor", status: "Merged", number: "8 commits", url: "https://github.com/Graphify-Labs/graphify/issues/3409" },
+  { repo: "Checkmate (11K+ ★)", title: "Build click-through incident history", status: "Merged", number: "#3975", url: "https://github.com/bluewave-labs/Checkmate/pull/3975" },
+  { repo: "Checkmate (11K+ ★)", title: "Fix gRPC health monitor initialization", status: "Merged", number: "#3974", url: "https://github.com/bluewave-labs/Checkmate/pull/3974" },
 ];
 const contactSchema = z.object({
   name: z.string().trim().min(2, "Please enter your name.").max(100),
@@ -135,11 +135,12 @@ function Index() {
             <h1 className="max-w-4xl text-5xl font-semibold leading-[1.03] sm:text-7xl lg:text-8xl">
               {heroLines.map((line) => <motion.span key={line} variants={{ initial: { opacity: 0, y: 34 }, animate: { opacity: 1, y: 0 } }} className="block">{line}</motion.span>)}
             </h1>
-            <motion.p variants={{ initial: { opacity: 0, y: 18 }, animate: { opacity: 1, y: 0 } }} className="mt-7 max-w-2xl text-lg leading-relaxed text-muted-foreground sm:text-xl">Software engineer specializing in backend systems, distributed architectures, and AI integrations. Building high-performance, fault-tolerant infrastructure.</motion.p>
+            <motion.p variants={{ initial: { opacity: 0, y: 18 }, animate: { opacity: 1, y: 0 } }} className="mt-7 max-w-2xl text-lg leading-relaxed text-muted-foreground sm:text-xl">Full-stack and AI engineer (B.Tech, 2027). I fixed a bug in Graphify (120K+ GitHub stars, 7M+ PyPI downloads) and built features for Checkmate (11K+ stars).</motion.p>
             <motion.div variants={{ initial: { opacity: 0 }, animate: { opacity: 1 } }} className="mt-10 flex flex-wrap items-center gap-3">
               <Button asChild variant="glow" size="lg"><a href="#projects">View projects <ArrowUpRight /></a></Button>
-              <Button asChild variant="glass" size="lg"><a href="#contact">Contact me <Mail /></a></Button>
               <Button asChild variant="glass" size="lg"><a href="/resume.pdf" target="_blank" rel="noreferrer" aria-label="Open resume (PDF)"><FileText />Resume</a></Button>
+              <Button asChild variant="glass" size="lg"><a href="https://vimeo.com/showcase/12392051" target="_blank" rel="noreferrer">Video Portfolio <ExternalLink /></a></Button>
+              <Button asChild variant="ghost" size="lg"><a href="#contact">Contact me <Mail /></a></Button>
               <span className="mx-2 hidden h-6 w-px bg-border sm:block" />
               <Button asChild variant="ghost" size="icon"><a href="https://github.com/nikhilsaxena04" target="_blank" rel="noreferrer" aria-label="GitHub"><Github /></a></Button>
               <Button asChild variant="ghost" size="icon"><a href="https://linkedin.com/in/nikhil-saxena-codes" target="_blank" rel="noreferrer" aria-label="LinkedIn"><Linkedin /></a></Button>
@@ -155,7 +156,7 @@ function Index() {
                 <h2 className="xray-type max-w-4xl text-5xl font-semibold leading-[1.03] sm:text-7xl lg:text-8xl">
                   {heroXrayLines.map((line) => <span key={line} className="block">{line}</span>)}
                 </h2>
-                <p className="xray-type mt-7 max-w-2xl text-lg leading-relaxed sm:text-xl">Ten years of curiosity compressed into shipping habits. Hidden message: hire the person who reads the source.</p>
+                <p className="xray-type mt-7 max-w-2xl text-lg leading-relaxed sm:text-xl">A network drops, a service crashes, an AI model times out. That's how I build. Hidden message: hire the person who reads the source.</p>
               </div>
             </div>
           </XRayLayer>
@@ -176,9 +177,9 @@ function Index() {
       <section id="open-source" className="py-24 sm:py-32"><div className="mx-auto max-w-7xl px-5 lg:px-8">
         <SectionHeading number="02" eyebrow="Open source" title="BUILT IN PUBLIC" />
         <motion.div {...reveal} className="mt-12 grid overflow-hidden rounded-lg border border-border bg-foreground text-background sm:grid-cols-3">
-          {[ ["130K+", "Stars Impacted"], ["4", "Major Features"], ["10+", "Merged PRs/Commits"] ].map(([value,label]) => <div key={label} className="border-b border-background/15 p-7 last:border-0 sm:border-b-0 sm:border-r"><div className="font-mono text-3xl font-bold text-primary">{value}</div><div className="mt-1 text-sm text-background/65">{label}</div></div>)}
+          {[ ["130K+", "Stars Impacted"], ["7M+", "PyPI Downloads"], ["10+", "Merged PRs/Commits"] ].map(([value,label]) => <div key={label} className="border-b border-background/15 p-7 last:border-0 sm:border-b-0 sm:border-r"><div className="font-mono text-3xl font-bold text-primary">{value}</div><div className="mt-1 text-sm text-background/65">{label}</div></div>)}
         </motion.div>
-        <div className="mt-8 divide-y divide-border border-y border-border">{contributions.map((item, index) => <motion.a {...reveal} transition={{ duration: .45, delay: index*.06 }} key={item.number} href="https://github.com/nikhilsaxena04" target="_blank" rel="noreferrer" className="group grid gap-3 py-6 sm:grid-cols-[1fr_2fr_auto] sm:items-center">
+        <div className="mt-8 divide-y divide-border border-y border-border">{contributions.map((item, index) => <motion.a {...reveal} transition={{ duration: .45, delay: index*.06 }} key={item.number} href={item.url} target="_blank" rel="noreferrer" className="group grid gap-3 py-6 sm:grid-cols-[1fr_2fr_auto] sm:items-center">
           <span className="flex items-center gap-2 font-mono text-xs text-code"><GitBranch className="size-4" />{item.repo}</span><span className="font-medium group-hover:text-primary">{item.title} <span className="text-muted-foreground">{item.number}</span></span><span className="flex items-center gap-2 text-xs text-muted-foreground"><span className={`size-2 rounded-full ${item.status === "Merged" ? "bg-code" : "bg-primary"}`} />{item.status}<ArrowUpRight className="size-4" /></span>
         </motion.a>)}</div>
       </div></section>
@@ -198,7 +199,7 @@ function Index() {
           <div className="grid-texture absolute inset-0 opacity-70" /><div className="absolute inset-6 flex items-center justify-center rounded-md border border-border bg-background/50 backdrop-blur-sm"><div className="text-center"><Code2 className="mx-auto size-12 text-primary" /><p className="mt-4 font-mono text-xs text-muted-foreground">NIKHIL SAXENA</p></div></div>
         </motion.div>
         <motion.div {...reveal}><SectionHeading number="04" eyebrow="About me" title="CURIOUS BY NATURE" />
-          <div className="mt-8 space-y-5 text-lg leading-relaxed text-muted-foreground"><p>I'm Nikhil, a software engineer focused on backend systems, distributed architectures, and building resilient APIs. I enjoy the challenge of solving high-concurrency problems and optimizing performance.</p><p>When I'm not architecting microservices or contributing to open-source projects like Graphify and Checkmate, you'll find me exploring new infrastructure tools or leading teams.</p></div>
+          <div className="mt-8 space-y-5 text-lg leading-relaxed text-muted-foreground"><p>I'm a full-stack and AI engineer graduating in 2027. I care about one question: what happens when something goes wrong? A network drops, a service crashes, an AI model times out. That's how I build.</p><p>Open source is where I prove it. I fixed a route-tracing bug in Graphify (120K+ GitHub stars, 7M+ PyPI downloads, YC S26), and built a 90-day incident history for Checkmate (11K+ stars). In my own projects, my Go notification system handles 9,200+ requests per second without losing messages.</p></div>
           <div className="mt-9 flex flex-wrap gap-5 font-mono text-xs text-muted-foreground"><span className="flex items-center gap-2"><Globe2 className="size-4 text-primary" />India · Open to remote</span><span className="flex items-center gap-2"><Coffee className="size-4 text-primary" />Powered by curiosity</span></div>
         </motion.div>
       </div>
