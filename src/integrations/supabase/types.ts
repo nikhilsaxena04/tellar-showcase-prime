@@ -40,6 +40,7 @@ export type Database = {
       }
       projects: {
         Row: {
+          bullets: string[] | null
           created_at: string
           description: string
           display_order: number
@@ -52,6 +53,7 @@ export type Database = {
           title: string
         }
         Insert: {
+          bullets?: string[] | null
           created_at?: string
           description: string
           display_order?: number
@@ -64,6 +66,7 @@ export type Database = {
           title: string
         }
         Update: {
+          bullets?: string[] | null
           created_at?: string
           description?: string
           display_order?: number
