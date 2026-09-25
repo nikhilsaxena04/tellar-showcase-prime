@@ -139,7 +139,6 @@ function Index() {
             <motion.div variants={{ initial: { opacity: 0 }, animate: { opacity: 1 } }} className="mt-10 flex flex-wrap items-center gap-3">
               <Button asChild variant="glow" size="lg"><a href="#projects">View projects <ArrowUpRight /></a></Button>
               <Button asChild variant="glass" size="lg"><a href="/resume.pdf" target="_blank" rel="noreferrer" aria-label="Open resume (PDF)"><FileText />Resume</a></Button>
-              <Button asChild variant="glass" size="lg"><a href="https://vimeo.com/showcase/12392051" target="_blank" rel="noreferrer">Video Portfolio <ExternalLink /></a></Button>
               <Button asChild variant="ghost" size="lg"><a href="#contact">Contact me <Mail /></a></Button>
               <span className="mx-2 hidden h-6 w-px bg-border sm:block" />
               <Button asChild variant="ghost" size="icon"><a href="https://github.com/nikhilsaxena04" target="_blank" rel="noreferrer" aria-label="GitHub"><Github /></a></Button>
