@@ -36,17 +36,18 @@ type Project = { id: string; title: string; description: string; tech_stack: str
 
 const navItems = ["Home", "Skills", "Open Source", "Projects", "About", "Contact"];
 const skillGroups = [
-  { title: "Frontend", icon: Braces, skills: ["React", "TypeScript", "Next.js", "Tailwind CSS", "Motion"] },
-  { title: "Backend", icon: Server, skills: ["Node.js", "PostgreSQL", "REST APIs", "Lovable Cloud", "Redis"] },
-  { title: "Tools", icon: ToolCase, skills: ["Git", "Docker", "Vercel", "Figma", "CI/CD"] },
+  { title: "Languages", icon: Braces, skills: ["Go", "Python", "C++", "SQL", "TypeScript", "Bash"] },
+  { title: "Backend", icon: Server, skills: ["gRPC", "Redis", "PostgreSQL", "REST", "WebSockets"] },
+  { title: "Tools", icon: ToolCase, skills: ["Docker", "AWS", "GitHub Actions", "Prometheus", "Grafana"] },
 ];
 const allSkills = skillGroups.flatMap((group) => group.skills);
-const heroLines = ["I build software", "that feels inevitable."];
-const heroXrayLines = ["I break things", "until they hold."];
+const heroLines = ["I engineer robust systems", "that scale."];
+const heroXrayLines = ["I build the backend", "you don't have to worry about."];
 const contributions = [
-  { repo: "shadcn-ui/ui", title: "Improve keyboard navigation in command menu", status: "Merged", number: "#4821" },
-  { repo: "tanstack/router", title: "Clarify route context examples", status: "Merged", number: "#3398" },
-  { repo: "motiondivision/motion", title: "Add reduced-motion recipe to documentation", status: "Open", number: "#2740" },
+  { repo: "Graphify", title: "Fix PHP route handlers in graph", status: "Merged", number: "#3461" },
+  { repo: "Graphify", title: "Stabilize closure IDs & refine extractor", status: "Merged", number: "8 commits" },
+  { repo: "Checkmate", title: "Build click-through incident history", status: "Merged", number: "#3975" },
+  { repo: "Checkmate", title: "Fix gRPC health monitor initialization", status: "Merged", number: "#3974" },
 ];
 const contactSchema = z.object({
   name: z.string().trim().min(2, "Please enter your name.").max(100),
@@ -134,13 +135,13 @@ function Index() {
             <h1 className="max-w-4xl text-5xl font-semibold leading-[1.03] sm:text-7xl lg:text-8xl">
               {heroLines.map((line) => <motion.span key={line} variants={{ initial: { opacity: 0, y: 34 }, animate: { opacity: 1, y: 0 } }} className="block">{line}</motion.span>)}
             </h1>
-            <motion.p variants={{ initial: { opacity: 0, y: 18 }, animate: { opacity: 1, y: 0 } }} className="mt-7 max-w-2xl text-lg leading-relaxed text-muted-foreground sm:text-xl">Full stack developer crafting thoughtful interfaces, resilient systems, and digital products built to last.</motion.p>
+            <motion.p variants={{ initial: { opacity: 0, y: 18 }, animate: { opacity: 1, y: 0 } }} className="mt-7 max-w-2xl text-lg leading-relaxed text-muted-foreground sm:text-xl">Software engineer specializing in backend systems, distributed architectures, and AI integrations. Building high-performance, fault-tolerant infrastructure.</motion.p>
             <motion.div variants={{ initial: { opacity: 0 }, animate: { opacity: 1 } }} className="mt-10 flex flex-wrap items-center gap-3">
               <Button asChild variant="glow" size="lg"><a href="#projects">View projects <ArrowUpRight /></a></Button>
               <Button asChild variant="glass" size="lg"><a href="#contact">Contact me <Mail /></a></Button>
               <span className="mx-2 hidden h-6 w-px bg-border sm:block" />
-              <Button asChild variant="ghost" size="icon"><a href="https://github.com/yourusername" target="_blank" rel="noreferrer" aria-label="GitHub"><Github /></a></Button>
-              <Button asChild variant="ghost" size="icon"><a href="https://linkedin.com/in/yourusername" target="_blank" rel="noreferrer" aria-label="LinkedIn"><Linkedin /></a></Button>
+              <Button asChild variant="ghost" size="icon"><a href="https://github.com/nikhilsaxena04" target="_blank" rel="noreferrer" aria-label="GitHub"><Github /></a></Button>
+              <Button asChild variant="ghost" size="icon"><a href="https://linkedin.com/in/nikhil-saxena-codes" target="_blank" rel="noreferrer" aria-label="LinkedIn"><Linkedin /></a></Button>
             </motion.div>
             <p className="mt-12 font-mono text-[10px] uppercase tracking-[0.25em] text-muted-foreground/70">move your cursor — there is something under the surface</p>
           </motion.div>
@@ -174,9 +175,9 @@ function Index() {
       <section id="open-source" className="py-24 sm:py-32"><div className="mx-auto max-w-7xl px-5 lg:px-8">
         <SectionHeading number="02" eyebrow="Open source" title="BUILT IN PUBLIC" />
         <motion.div {...reveal} className="mt-12 grid overflow-hidden rounded-lg border border-border bg-foreground text-background sm:grid-cols-3">
-          {[ ["48+", "Contributions"], ["12", "Repositories"], ["8", "Merged PRs"] ].map(([value,label]) => <div key={label} className="border-b border-background/15 p-7 last:border-0 sm:border-b-0 sm:border-r"><div className="font-mono text-3xl font-bold text-primary">{value}</div><div className="mt-1 text-sm text-background/65">{label}</div></div>)}
+          {[ ["130K+", "Stars Impacted"], ["4", "Major Features"], ["10+", "Merged PRs/Commits"] ].map(([value,label]) => <div key={label} className="border-b border-background/15 p-7 last:border-0 sm:border-b-0 sm:border-r"><div className="font-mono text-3xl font-bold text-primary">{value}</div><div className="mt-1 text-sm text-background/65">{label}</div></div>)}
         </motion.div>
-        <div className="mt-8 divide-y divide-border border-y border-border">{contributions.map((item, index) => <motion.a {...reveal} transition={{ duration: .45, delay: index*.06 }} key={item.number} href="https://github.com/yourusername" target="_blank" rel="noreferrer" className="group grid gap-3 py-6 sm:grid-cols-[1fr_2fr_auto] sm:items-center">
+        <div className="mt-8 divide-y divide-border border-y border-border">{contributions.map((item, index) => <motion.a {...reveal} transition={{ duration: .45, delay: index*.06 }} key={item.number} href="https://github.com/nikhilsaxena04" target="_blank" rel="noreferrer" className="group grid gap-3 py-6 sm:grid-cols-[1fr_2fr_auto] sm:items-center">
           <span className="flex items-center gap-2 font-mono text-xs text-code"><GitBranch className="size-4" />{item.repo}</span><span className="font-medium group-hover:text-primary">{item.title} <span className="text-muted-foreground">{item.number}</span></span><span className="flex items-center gap-2 text-xs text-muted-foreground"><span className={`size-2 rounded-full ${item.status === "Merged" ? "bg-code" : "bg-primary"}`} />{item.status}<ArrowUpRight className="size-4" /></span>
         </motion.a>)}</div>
       </div></section>
@@ -193,10 +194,10 @@ function Index() {
 
       <section id="about" className="relative overflow-hidden py-24 sm:py-32"><div className="mx-auto grid max-w-7xl gap-14 px-5 lg:grid-cols-[.8fr_1.2fr] lg:items-center lg:px-8">
         <motion.div animate={{ y: [0, -12, 0] }} transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }} className="relative mx-auto aspect-[4/5] w-full max-w-sm overflow-hidden rounded-lg border border-border bg-surface-strong">
-          <div className="grid-texture absolute inset-0 opacity-70" /><div className="absolute inset-6 flex items-center justify-center rounded-md border border-border bg-background/50 backdrop-blur-sm"><div className="text-center"><Code2 className="mx-auto size-12 text-primary" /><p className="mt-4 font-mono text-xs text-muted-foreground">YOUR PHOTO HERE</p></div></div>
+          <div className="grid-texture absolute inset-0 opacity-70" /><div className="absolute inset-6 flex items-center justify-center rounded-md border border-border bg-background/50 backdrop-blur-sm"><div className="text-center"><Code2 className="mx-auto size-12 text-primary" /><p className="mt-4 font-mono text-xs text-muted-foreground">NIKHIL SAXENA</p></div></div>
         </motion.div>
         <motion.div {...reveal}><SectionHeading number="04" eyebrow="About me" title="CURIOUS BY NATURE" />
-          <div className="mt-8 space-y-5 text-lg leading-relaxed text-muted-foreground"><p>I’m Nikhil, a software developer focused on building useful, dependable experiences across the stack. I enjoy the space where strong engineering meets thoughtful design.</p><p>When I’m not shipping products, you’ll find me exploring open-source projects, sharpening systems knowledge, or turning coffee into side projects.</p></div>
+          <div className="mt-8 space-y-5 text-lg leading-relaxed text-muted-foreground"><p>I'm Nikhil, a software engineer focused on backend systems, distributed architectures, and building resilient APIs. I enjoy the challenge of solving high-concurrency problems and optimizing performance.</p><p>When I'm not architecting microservices or contributing to open-source projects like Graphify and Checkmate, you'll find me exploring new infrastructure tools or leading teams.</p></div>
           <div className="mt-9 flex flex-wrap gap-5 font-mono text-xs text-muted-foreground"><span className="flex items-center gap-2"><Globe2 className="size-4 text-primary" />India · Open to remote</span><span className="flex items-center gap-2"><Coffee className="size-4 text-primary" />Powered by curiosity</span></div>
         </motion.div>
       </div>
@@ -211,7 +212,7 @@ function Index() {
       </section>
 
       <section id="contact" className="border-t border-border bg-muted/30 py-24 sm:py-32"><div className="mx-auto grid max-w-7xl gap-14 px-5 lg:grid-cols-2 lg:px-8">
-        <motion.div {...reveal}><SectionHeading number="05" eyebrow="Contact" title="Have a problem worth solving? Let’s talk." /><p className="mt-6 max-w-lg text-lg leading-relaxed text-muted-foreground">I’m always interested in thoughtful products, ambitious teams, and useful open-source work.</p><a href="mailto:hello@example.com" className="mt-8 inline-flex items-center gap-3 font-mono text-sm text-foreground hover:text-primary"><Mail className="size-4" />hello@example.com</a></motion.div>
+        <motion.div {...reveal}><SectionHeading number="05" eyebrow="Contact" title="Have a problem worth solving? Let’s talk." /><p className="mt-6 max-w-lg text-lg leading-relaxed text-muted-foreground">I’m always interested in thoughtful products, ambitious teams, and useful open-source work.</p><a href="mailto:myemailnikhilsaxena@gmail.com" className="mt-8 inline-flex items-center gap-3 font-mono text-sm text-foreground hover:text-primary"><Mail className="size-4" />myemailnikhilsaxena@gmail.com</a></motion.div>
         <motion.form {...reveal} onSubmit={submitContact} className="glass-panel space-y-5 rounded-lg p-6 sm:p-8" noValidate>
           <Field label="Name" error={errors["name"]}><Input name="name" maxLength={100} placeholder="Your name" aria-invalid={Boolean(errors["name"])} /></Field>
           <Field label="Email" error={errors["email"]}><Input name="email" type="email" maxLength={255} placeholder="you@company.com" aria-invalid={Boolean(errors["email"])} /></Field>
@@ -221,7 +222,7 @@ function Index() {
       </div></section>
     </main>
 
-    <footer className="border-t border-border py-8"><div className="mx-auto flex max-w-7xl flex-col gap-5 px-5 text-sm text-muted-foreground sm:flex-row sm:items-center sm:justify-between lg:px-8"><p>© 2026 Nikhil Saxena. Built with care.</p><div className="flex gap-5"><a href="https://github.com/yourusername" className="hover:text-foreground">GitHub</a><a href="https://linkedin.com/in/yourusername" className="hover:text-foreground">LinkedIn</a><a href="#home" className="hover:text-foreground">Back to top ↑</a></div></div></footer>
+    <footer className="border-t border-border py-8"><div className="mx-auto flex max-w-7xl flex-col gap-5 px-5 text-sm text-muted-foreground sm:flex-row sm:items-center sm:justify-between lg:px-8"><p>© 2026 Nikhil Saxena. Built with care.</p><div className="flex gap-5"><a href="https://github.com/nikhilsaxena04" className="hover:text-foreground">GitHub</a><a href="https://linkedin.com/in/nikhil-saxena-codes" className="hover:text-foreground">LinkedIn</a><a href="#home" className="hover:text-foreground">Back to top ↑</a></div></div></footer>
   </div>;
 }
 
